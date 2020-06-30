@@ -6,6 +6,7 @@
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "scripts": {
+    "test": "karma start karma.conf.js",
     "build": "NODE_ENV=production tsc -p tsconfig.prod.json"
   },
   "repository": {
@@ -24,9 +25,15 @@
     "@typescript-eslint/eslint-plugin": "^2.34.0",
     "@typescript-eslint/parser": "^2.34.0",
     "eslint": "^7.0.0",
+    "jasmine-core": "^3.5.0",
+    "karma-chrome-launcher": "^3.1.0",
+    "karma-jasmine": "^3.3.1",
     "typescript": "^3.9.3"
   },
   "dependencies": {
+    "@types/jasmine": "^3.5.11",
+    "karma": "^5.1.0",
+    "karma-typescript": "^5.0.3",
     "localforage": "^1.7.4"
   }
 }
