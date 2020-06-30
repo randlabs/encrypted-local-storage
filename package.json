@@ -21,17 +21,18 @@
   },
   "homepage": "https://github.com/randlabs/encrypted-local-storage#readme",
   "devDependencies": {
+    "@types/mocha": "^7.0.2",
     "@types/node": "^13.7.7",
     "@typescript-eslint/eslint-plugin": "^2.34.0",
     "@typescript-eslint/parser": "^2.34.0",
     "eslint": "^7.0.0",
     "jasmine-core": "^3.5.0",
     "karma-chrome-launcher": "^3.1.0",
-    "karma-jasmine": "^3.3.1",
+    "karma-mocha": "^2.0.1",
+    "mocha": "^8.0.1",
     "typescript": "^3.9.3"
   },
   "dependencies": {
-    "@types/jasmine": "^3.5.11",
     "karma": "^5.1.0",
     "karma-typescript": "^5.0.3",
     "localforage": "^1.7.4"
