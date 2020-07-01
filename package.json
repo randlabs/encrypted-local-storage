@@ -6,7 +6,8 @@
   "types": "build/index.d.ts",
   "scripts": {
     "test": "karma start karma.conf.js",
-    "build": "NODE_ENV=production tsc -p tsconfig.prod.json"
+    "build": "NODE_ENV=production tsc -p tsconfig.prod.json",
+    "prepare": "npm run build"
   },
   "repository": {
     "type": "git",
