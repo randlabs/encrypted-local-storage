@@ -68,10 +68,10 @@ export default class AppStorage {
 			if (encryptedMasterpass) {
 				const masterkey = await StrongCipher.generateMasterKey(password);
 				const decryptedMasterpass = await StrongCipher.decrypt(encryptedMasterpass, masterkey);
-				const obfuscatekey = decryptedMasterpass.substr(0, decryptedMasterpass.length - 24);
-				const validate = decryptedMasterpass.substring(decryptedMasterpass.length - 24);
-				const OK = Buffer.from(fromHexString(validate)).toString();
 				const PHRASE = okPhrase ? okPhrase : AppStorage.MY_ALGO_STORAGE;
+				const obfuscatekey = decryptedMasterpass.substr(0, decryptedMasterpass.length - (PHRASE.length * 2));
+				const validate = decryptedMasterpass.substring(decryptedMasterpass.length - (PHRASE.length * 2));
+				const OK = Buffer.from(fromHexString(validate)).toString();
 				if (OK === PHRASE) {
 					return obfuscatekey;
 				}

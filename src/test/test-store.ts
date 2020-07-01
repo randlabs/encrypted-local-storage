@@ -3,6 +3,8 @@ import AppStorage from "../index";
 import { expect } from "chai";
 import { password, masterkey } from "./test-password";
 
+export const PHRASE = "TEST_PHRASE_FOR_STORAGE";
+
 describe("Storage Management", function() {
 
 	const item = { obj: { name: "test", age: 100 } };
@@ -10,7 +12,7 @@ describe("Storage Management", function() {
 	let obfuscatekey = "";
 
 	before(function(done) {
-		AppStorage.createPassword(masterkey, password)
+		AppStorage.createPassword(masterkey, password, PHRASE)
 		.then(() => {
 			done();
 		})
@@ -22,7 +24,7 @@ describe("Storage Management", function() {
 	describe("Save an item", function() {
 
 		before(function(done) {
-			AppStorage.verifyPassword(masterkey, password)
+			AppStorage.verifyPassword(masterkey, password, PHRASE)
 			.then((result) => {
 				obfuscatekey = result;
 				done();
@@ -48,7 +50,7 @@ describe("Storage Management", function() {
 	describe("Load item", function() {
 
 		before(function(done) {
-			AppStorage.verifyPassword(masterkey, password)
+			AppStorage.verifyPassword(masterkey, password, PHRASE)
 			.then((result) => {
 				obfuscatekey = result;
 				done();
@@ -82,7 +84,7 @@ describe("Storage Management", function() {
 	describe("Load removed item", function() {
 
 		before(function(done) {
-			AppStorage.verifyPassword(masterkey, password)
+			AppStorage.verifyPassword(masterkey, password, PHRASE)
 			.then((result) => {
 				obfuscatekey = result;
 				done();
@@ -107,7 +109,7 @@ describe("Storage Management", function() {
 	});
 
 	after(function(done) {
-		AppStorage.resetWallet().then(() => {
+		AppStorage.resetStorage().then(() => {
 			done();
 		});
 	});

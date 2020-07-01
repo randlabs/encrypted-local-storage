@@ -117,7 +117,7 @@ describe("Strong Store Management", function() {
 	});
 
 	after(function(done) {
-		AppStorage.resetWallet().then(() => {
+		AppStorage.resetStorage().then(() => {
 			done();
 		});
 	});

@@ -23,6 +23,7 @@ describe("Password Management", function() {
 			done();
 		})
 		.catch((err) => {
+			console.error(err);
 			done(err);
 		});
 	});
@@ -39,7 +40,7 @@ describe("Password Management", function() {
 	});
 
 	after(function(done) {
-		AppStorage.resetWallet().then(() => {
+		AppStorage.resetStorage().then(() => {
 			done();
 		});
 	});

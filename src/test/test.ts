@@ -73,7 +73,7 @@ describe("Test utils functions", function() {
 	});
 
 	it("Should reset the storage", function(done) {
-		AppStorage.resetWallet()
+		AppStorage.resetStorage()
 		.then(() => {
 			done();
 		})
