@@ -111,4 +111,3 @@ var Storage = (function () {
     return Storage;
 }());
 exports.default = Storage;
-//# sourceMappingURL=storage.js.map

@@ -72,4 +72,3 @@ function digest(buffer, algorithm) {
     });
 }
 exports.digest = digest;
-//# sourceMappingURL=cipher-utils.js.map

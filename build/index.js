@@ -291,4 +291,3 @@ var AppStorage = (function () {
     return AppStorage;
 }());
 exports.default = AppStorage;
-//# sourceMappingURL=index.js.map
