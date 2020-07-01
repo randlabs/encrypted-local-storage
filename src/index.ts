@@ -5,7 +5,7 @@ import { generateRandomValues, fromHexString, toHexString } from "./cipher/ciphe
 
 export default class AppStorage {
 	private cipher: Cipher;
-	static readonly MYALGOWALLET: string = "MYALGOWALLET";
+	static readonly MY_ALGO_STORAGE: string = "MY_ALGO_STORAGE";
 
 	constructor(storagekey?: string) {
 		this.cipher = new Cipher(storagekey);
@@ -71,7 +71,7 @@ export default class AppStorage {
 				const obfuscatekey = decryptedMasterpass.substr(0, decryptedMasterpass.length - 24);
 				const validate = decryptedMasterpass.substring(decryptedMasterpass.length - 24);
 				const OK = Buffer.from(fromHexString(validate)).toString();
-				const PHRASE = okPhrase ? okPhrase : AppStorage.MYALGOWALLET;
+				const PHRASE = okPhrase ? okPhrase : AppStorage.MY_ALGO_STORAGE;
 				if (OK === PHRASE) {
 					return obfuscatekey;
 				}
@@ -87,7 +87,7 @@ export default class AppStorage {
 	static async createPassword(key: string, password: string, okPhrase?: string): Promise<void> {
 		const masterkey = await StrongCipher.generateMasterKey(password);
 		const obfuscatekey = generateRandomValues(32);
-		const PHRASE = okPhrase ? okPhrase : AppStorage.MYALGOWALLET;
+		const PHRASE = okPhrase ? okPhrase : AppStorage.MY_ALGO_STORAGE;
 		const OK = new Uint8Array(Buffer.from(PHRASE));
 		const masterpass = toHexString(obfuscatekey) + toHexString(OK);
 		const encryptedMasterpass = await StrongCipher.encrypt(masterpass, masterkey);
@@ -114,7 +114,7 @@ export default class AppStorage {
 		return hasItem;
 	}
 
-	static async resetWallet(): Promise<void> {
+	static async resetStorage(): Promise<void> {
 		await Storage.clearStorage();
 	}
 

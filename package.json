@@ -2,7 +2,6 @@
   "name": "encrypted-local-storage",
   "version": "1.0.0",
   "description": "",
-  "prepublish": "tsc",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "scripts": {
