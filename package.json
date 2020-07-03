@@ -2,8 +2,8 @@
   "name": "encrypted-local-storage",
   "version": "1.0.0",
   "description": "",
-  "main": "build/index.js",
-  "types": "build/index.d.ts",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "scripts": {
     "test": "karma start karma.conf.js",
     "build": "NODE_ENV=production tsc -p tsconfig.prod.json",
@@ -33,11 +33,11 @@
     "karma-chrome-launcher": "^3.1.0",
     "karma-mocha": "^2.0.1",
     "mocha": "^8.0.1",
-    "typescript": "^3.9.3"
+    "typescript": "^3.9.3",
+    "karma": "^5.1.0",
+    "karma-typescript": "^5.0.3"
   },
   "dependencies": {
-    "karma": "^5.1.0",
-    "karma-typescript": "^5.0.3",
     "localforage": "^1.7.4"
   }
 }
