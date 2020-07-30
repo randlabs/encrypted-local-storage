@@ -7,7 +7,8 @@
   "scripts": {
     "test": "karma start karma.conf.js",
     "build": "NODE_ENV=production tsc -p tsconfig.prod.json",
-    "prepare": "npm run build"
+    "prepare": "npm run build",
+    "build:dist": "browserify lib/index.js -s AppStorage > dist/encrypted-local-storage.js"
   },
   "repository": {
     "type": "git",
@@ -26,16 +27,18 @@
     "@types/node": "^13.7.7",
     "@typescript-eslint/eslint-plugin": "^2.34.0",
     "@typescript-eslint/parser": "^2.34.0",
+    "browserify": "^16.5.1",
     "chai": "^4.2.0",
     "eslint": "^7.0.0",
     "jasmine-core": "^3.5.0",
+    "karma": "^5.1.0",
     "karma-chai": "^0.1.0",
     "karma-chrome-launcher": "^3.1.0",
     "karma-mocha": "^2.0.1",
+    "karma-typescript": "^5.0.3",
+    "minify": "^5.1.1",
     "mocha": "^8.0.1",
-    "typescript": "^3.9.3",
-    "karma": "^5.1.0",
-    "karma-typescript": "^5.0.3"
+    "typescript": "^3.9.3"
   },
   "dependencies": {
     "localforage": "^1.7.4"
