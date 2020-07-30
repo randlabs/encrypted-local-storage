@@ -1,7 +1,8 @@
 import Storage from "./storage";
 import * as StrongCipher from "./cipher/strong-cipher";
 import Cipher from "./cipher/cipher";
-import { generateRandomValues, fromHexString, toHexString } from "./cipher/cipher-utils";
+import { fromHexString, toHexString } from "./cipher/cipher-utils";
+import AesCBC from "./cipher/cipher";
 
 export default class AppStorage {
 	private cipher: Cipher;
@@ -86,7 +87,7 @@ export default class AppStorage {
 
 	static async createPassword(key: string, password: string, okPhrase?: string): Promise<void> {
 		const masterkey = await StrongCipher.generateMasterKey(password);
-		const obfuscatekey = generateRandomValues(32);
+		const obfuscatekey = AesCBC.generateObfuscatekey();
 		const PHRASE = okPhrase ? okPhrase : AppStorage.MY_ALGO_STORAGE;
 		const OK = new Uint8Array(Buffer.from(PHRASE));
 		const masterpass = toHexString(obfuscatekey) + toHexString(OK);

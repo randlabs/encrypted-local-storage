@@ -1,6 +1,9 @@
 import { isSupportedStrongCipher } from "./strong-cipher";
 import { generateRandomValues, fromHexString, toHexString } from "./cipher-utils";
 
+const IV_SIZE = 16;
+const OBFUSCATEKEY_SIZE = 32;
+
 export default class AesCBC {
 	private obfuscatekey: Uint8Array;
 	private masterkey: CryptoKey|null;
@@ -10,9 +13,13 @@ export default class AesCBC {
 			this.obfuscatekey = fromHexString(obfuscatekey);
 		}
 		else {
-			this.obfuscatekey = generateRandomValues(32);
+			this.obfuscatekey = AesCBC.generateObfuscatekey();
 		}
 		this.masterkey = null;
+	}
+
+	static generateObfuscatekey(): Uint8Array {
+		return generateRandomValues(OBFUSCATEKEY_SIZE);
 	}
 
 	private async importMasterkey(): Promise<void> {
@@ -36,7 +43,7 @@ export default class AesCBC {
 		if (!this.masterkey) {
 			await this.importMasterkey();
 		}
-		const iv = generateRandomValues(16);
+		const iv = generateRandomValues(IV_SIZE);
 		const encoder = new TextEncoder();
 		const encryptedValue = await window.crypto.subtle.encrypt(
 			{
@@ -54,8 +61,8 @@ export default class AesCBC {
 		if (!this.masterkey) {
 			await this.importMasterkey();
 		}
-		const iv = fromHexString(value.substr(value.length - 32));
-		if (!iv || iv.length !== 16) {
+		const iv = fromHexString(value.substr(value.length - (IV_SIZE * 2)));
+		if (!iv || iv.length !== IV_SIZE) {
 			throw new Error("Invalid initial vector");
 		}
 		const decryptedValue = await window.crypto.subtle.decrypt(
@@ -64,7 +71,7 @@ export default class AesCBC {
 				iv
 			},
 			this.masterkey!,
-			fromHexString(value.substr(0, value.length - 32))
+			fromHexString(value.substr(0, value.length - (IV_SIZE * 2)))
 		);
 		const decoder = new TextDecoder();
 
