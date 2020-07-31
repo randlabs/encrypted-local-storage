@@ -1,60 +1,136 @@
-# Encrypted Local Storage
+# Encrypted Local Storage  
 
-## Web wallet security
+#### [Overview](#Overview)
+#### [How does it work?](#How-does-it-work?)
+#### [Installation](#Installation)
+#### [API Usage](#API-Usage)
+- ##### [Create new password](#Create-new-password)
+- ##### [Verify password](#Verify-password)
+- ##### [Create AppStorage instance](#Create-AppStorage-instance)
+- ##### [Storing data](#Storing-data)
+- ##### [Loading data](#Loading-data)
+- ##### [Storing private data](#Storing-private-data)
+- ##### [Loading private data](#Loading-private-data)
+#### [Test](#Test)
+#### [Contributing](#Contributing)
+#### [Copyright and License](#Copyright-and-License)
 
-### Initial setup
+### Overview  
+Encrypted local storage is a Javascript library developed by Rand Labs to securely store the information in the browser and primarily used by MyAlgo Wallet. It uses the browser’s IndexedDB API for storage and the WebCrypto API to create the keys and encrypt/decrypt data.
 
-* User enters a password that will be used to access the wallet
-* IV / Salt pair is generated to store encrypted information
-* 256-bit random key is generated to encrypt public information
-* Pbkdf2 masterkey is generated using the supplied password
-* Derived key is created with the IV/Salt pair and 1,000,000 iterations
-* Random-length blob is created consisting of:
-  * The first 32 bytes are the 256-bit random key
-  * The last 2 bytes has the text “ok”
-  * The remaining bytes in the middle have random values
-  * This blob is encrypted using the derived key.
-  * The IV, Salt and encrypted blob is stored on browser’s storage under master_key as { “iv”: “xxx”, “salt”: “xxx”, “data”: “encrypted-blob” }
+### How does it work?  
 
-### Creation of a new wallet
+Encrypted local storage uses two different zones to store data, one for passwords and private keys, and the other to store public information.
 
-* Wallet information (name, address and, optionally, the mnemonic)
-* The user enters the password
-* Based on the masterkey, a new IV/Salt pair is generated for the new wallet and a new derived key
-* The mnemonic, converted to a private key, is encrypted with this new derived key
+For the former, we use the AES-GCM algorithm with a 12 bytes IV and 32 bytes salt. Also we use PBKDF2 to generate the keys with the supplied password and a configuration of 256-bit length, 32 bytes salt, SHA-512, and 1 million iterations.  
 
-**Wallet’s data is stored under: wallet_#_info**
+For public data, a 256-bit obfuscation key is created with a 16-byte IV and used in conjunction with AES-CBC to protect public data. Despite it isn’t necessary to protect public data, users might want to hide them.
 
-This structure:
-{ “address”: “xxx”, ...other wallet public info, “iv”: “xxx”, “salt”: “xxx”, “data”: “encrypted-pk” }
+To ensure a high entropy in all generated random numbers, WebCrypto’s random number generator is used.
 
-is encrypted with AES-CBC using the random 256-bit key generated in the initial setup  and a generated IV resulting in something like:
-{ “iv”: “xxx”, “data”: “encripted-public-info” }
+Password verification involves decryption of the obfuscation key concatenated with a specific phrase using AES-GCM. We check both successful decryption and correctness of the phrase. After this, the obtained obfuscation key is used to decrypt the public information.
 
-### Accessing the wallet
+At last, every time data is saved in the storage, a new IV and SALT pair is generated and used to encrypt such data.
 
-* Read info stored in master_key
-* User enters the password
-* Pbkdf2 masterkey is generated with supplied password and derived key is imported with provided IV/Salt
-* Data blob is decrypted
-* The app checks if the last two characters are the string “ok” and stores the first 32 bytes to encode/decode public data
+### Installation  
 
-### Using the wallet
+The library can be installed via npm:
+```sh
+npm install encrypted-local-storage
+```
 
-For normal usage, it is straightforward. Public info is encoded/decoded using the 256-bit random key as required.
+### API Usage  
 
-When the private key is required:
+#### Create new password  
 
-* User enters the password.
-* Masterkey is generated and the password is checked
-* The wallet’s derived key is generated based on the stored IV/Salt pair
-* The private key is decrypted
+```js
+import AppStorage from "encrypted-storage"
 
-### Iterations:
+const passwordKey = "masterkey"; // IndexedDB key
+const password = "secret-password";
 
-We use 1 million iterations to increment the time it takes a local brute force attack. We adjusted this parameter to prevent attacks but keeping performance good enough on mid-end smartphones or tablets (5 seconds in a Snapdragon 632 running at 1.8 ghz).
+(async () => {
+    await AppStorage.createPassword(passwordKey, password);
+})().catch(e => {
+    console.log(e);
+});
+```
 
-**Alternatives**
+#### Verify password  
+```js
+(async () => {
+    const obfuscatekey = await AppStorage.verifyPassword(passwordKey, password);
+})().catch(e => {
+    console.log(e); // Invalid password
+});
+```
 
-Lowering the iterations count to some acceptable value.
-To verify if the entered password is correct when the private key needs to be used, instead of checking the password and decrypting the PK, we can directly decrypt the PK and use NaCL libraries to ensure the PK belongs to the account’s address.
+#### Create AppStorage instance  
+
+```js
+const appStorage = new AppStorage(); // obfuscatekey param its optional
+const obfuscatekey = appStorage.getStorageKey();
+```
+
+#### Storing data  
+
+```js
+const itemKey = "info";
+const obj = { name: "Jay", phone: "156988460", zipcode: 546944 }
+(async () => {
+    const appStorage = new AppStorage(obfuscatekey);
+    await appStorage.saveItemToStorage(itemKey, obj);
+})().catch(e => {
+    console.log(e);
+});
+```
+
+#### Loading data  
+
+```js
+(async () => {
+    const appStorage = new AppStorage(obfuscatekey);
+    const data = await appStorage.loadItemFromStorage(itemKey);
+    console.log(data);
+})().catch(e => {
+    console.log(e);
+});
+```
+
+#### Storing private data  
+
+```js
+const password = "secret-password";
+const itemKey = "private_key";
+const privateData = "private key information";
+(async () => {
+    const appStorage = new AppStorage(obfuscatekey);
+    const data = new Uint8Array(Buffer.from(privateData));
+    await appStorage.savePrivatekeyToStorage(itemKey, password, data);
+})().catch(e => {
+    console.log(e);
+});
+```
+
+#### Loading private data  
+
+```js
+const password = "secret-password";
+const itemKey = "private_key";
+
+(async () => {
+    const appStorage = new AppStorage(obfuscatekey);
+    const data = await appStorage.loadPrivatekeyFromStorage(itemKey, password, data);
+    console.log(Buffer.from(data).toString());
+})().catch(e => {
+    console.log(e);
+});
+```
+
+### Test  
+
+
+### Contributing  
+
+
+### Copyright and License  
