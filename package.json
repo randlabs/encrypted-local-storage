@@ -6,16 +6,22 @@
   "types": "lib/index.d.ts",
   "scripts": {
     "test": "karma start karma.conf.js",
-    "build": "NODE_ENV=production tsc -p tsconfig.prod.json",
-    "prepare": "npm run build",
-    "build:dist": "browserify lib/index.js -s AppStorage > dist/encrypted-local-storage.js"
+    "build:lib": "NODE_ENV=production tsc -p tsconfig.prod.json",
+    "build:dist": "browserify lib/index.js -s AppStorage -o dist/encrypted-local-storage.js ",
+    "build": "npm run build:lib && npm run build:dist",
+    "clean": "node ./node_modules/rimraf/bin.js lib dist coverage",
+    "rebuild": "npm run clean && npm run build",
+    "prepublishOnly": "npm run rebuild"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/randlabs/encrypted-local-storage.git"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "storage",
+    "encrypted"
+  ],
+  "author": "RandLabs IO",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/randlabs/encrypted-local-storage/issues"
@@ -36,8 +42,8 @@
     "karma-chrome-launcher": "^3.1.0",
     "karma-mocha": "^2.0.1",
     "karma-typescript": "^5.0.3",
-    "minify": "^5.1.1",
     "mocha": "^8.0.1",
+    "rimraf": "^3.0.2",
     "typescript": "^3.9.3"
   },
   "dependencies": {

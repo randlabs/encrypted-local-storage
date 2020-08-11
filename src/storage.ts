@@ -2,12 +2,12 @@ import localforage from "localforage";
 
 export default class Storage {
 	static async getItem(key: string): Promise<string|null> {
-		const value: string = await localforage.getItem(key);
+		const value = await localforage.getItem(key);
 		if (!value) {
 			return null;
 		}
 
-		return value;
+		return value as string;
 	}
 
 	static async setItem(key: string, value: string): Promise<void> {

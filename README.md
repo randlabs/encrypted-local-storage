@@ -129,8 +129,15 @@ const itemKey = "private_key";
 
 ### Test  
 
+Encrypted Local Storage is designed to run in the browser. You can test it locally using:  
+```sh
+npm test
+```  
+All tests are ran using KarmaJS
 
 ### Contributing  
 
+We are happy that you are interested in collaborating with our project.  
+To contribute, please fork the repository, clone it, make your commits, and then make a PR to the develop branch. Make sure all linter and test pass.
 
 ### Copyright and License  
