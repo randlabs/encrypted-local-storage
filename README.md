@@ -1,19 +1,19 @@
 # Encrypted Local Storage  
 
-#### [Overview](#Overview)
-#### [How does it work?](#How-does-it-work?)
-#### [Installation](#Installation)
-#### [API Usage](#API-Usage)
-- ##### [Create new password](#Create-new-password)
-- ##### [Verify password](#Verify-password)
-- ##### [Create AppStorage instance](#Create-AppStorage-instance)
-- ##### [Storing data](#Storing-data)
-- ##### [Loading data](#Loading-data)
-- ##### [Storing private data](#Storing-private-data)
-- ##### [Loading private data](#Loading-private-data)
-#### [Test](#Test)
-#### [Contributing](#Contributing)
-#### [Copyright and License](#Copyright-and-License)
+* [Overview](#Overview)
+* [How does it work?](#How-does-it-work?)
+* [Installation](#Installation)
+* [API Usage](#API-Usage)
+  * [Create new password](#Create-new-password)
+  * [Verify password](#Verify-password)
+  * [Create AppStorage instance](#Create-AppStorage-instance)
+  * [Storing data](#Storing-data)
+  * [Loading data](#Loading-data)
+  * [Storing private data](#Storing-private-data)
+  * [Loading private data](#Loading-private-data)
+* [Test](#Test)
+* [Contributing](#Contributing)
+* [Copyright and License](#Copyright-and-License)
 
 ### Overview  
 Encrypted local storage is a Javascript library developed by Rand Labs to securely store the information in the browser and primarily used by MyAlgo Wallet. It uses the browser’s IndexedDB API for storage and the WebCrypto API to create the keys and encrypt/decrypt data.
@@ -131,7 +131,7 @@ const itemKey = "private_key";
 
 Encrypted Local Storage is designed to run in the browser. You can test it locally using:  
 ```sh
-npm test
+npm run test
 ```  
 All tests are ran using KarmaJS
 
