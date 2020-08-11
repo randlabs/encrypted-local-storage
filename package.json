@@ -22,7 +22,7 @@
     "encrypted"
   ],
   "author": "RandLabs IO",
-  "license": "ISC",
+  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/randlabs/encrypted-local-storage/issues"
   },
