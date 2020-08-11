@@ -141,3 +141,5 @@ We are happy that you are interested in collaborating with our project.
 To contribute, please fork the repository, clone it, make your commits, and then make a PR to the develop branch. Make sure all linter and test pass.
 
 ### Copyright and License  
+
+See [LICENSE](LICENSE) file.
