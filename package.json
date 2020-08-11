@@ -1,0 +1,52 @@
+{
+  "name": "@randlabs/encrypted-local-storage",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "test": "karma start karma.conf.js",
+    "build:lib": "NODE_ENV=production tsc -p tsconfig.prod.json",
+    "build:dist": "browserify lib/index.js -s AppStorage -o dist/encrypted-local-storage.js ",
+    "build": "npm run build:lib && npm run build:dist",
+    "clean": "node ./node_modules/rimraf/bin.js lib dist coverage",
+    "rebuild": "npm run clean && npm run build",
+    "prepare": "npm run rebuild"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/randlabs/encrypted-local-storage.git"
+  },
+  "keywords": [
+    "storage",
+    "encrypted"
+  ],
+  "author": "RandLabs IO",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/randlabs/encrypted-local-storage/issues"
+  },
+  "homepage": "https://github.com/randlabs/encrypted-local-storage#readme",
+  "devDependencies": {
+    "@types/chai": "^4.2.11",
+    "@types/mocha": "^7.0.2",
+    "@types/node": "^13.7.7",
+    "@typescript-eslint/eslint-plugin": "^2.34.0",
+    "@typescript-eslint/parser": "^2.34.0",
+    "browserify": "^16.5.1",
+    "chai": "^4.2.0",
+    "eslint": "^7.0.0",
+    "jasmine-core": "^3.5.0",
+    "karma": "^5.1.0",
+    "karma-chai": "^0.1.0",
+    "karma-chrome-launcher": "^3.1.0",
+    "karma-mocha": "^2.0.1",
+    "karma-typescript": "^5.0.3",
+    "mocha": "^8.0.1",
+    "rimraf": "^3.0.2",
+    "typescript": "^3.9.3"
+  },
+  "dependencies": {
+    "localforage": "^1.7.4"
+  }
+}
