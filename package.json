@@ -1,5 +1,5 @@
 {
-  "name": "encrypted-local-storage",
+  "name": "@randlabs/encrypted-local-storage",
   "version": "1.0.0",
   "description": "",
   "main": "lib/index.js",

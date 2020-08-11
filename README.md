@@ -36,7 +36,7 @@ At last, every time data is saved in the storage, a new IV and SALT pair is gene
 
 The library can be installed via npm:
 ```sh
-npm install encrypted-local-storage
+npm install @randlabs/encrypted-local-storage
 ```
 
 ### API Usage  
@@ -44,7 +44,7 @@ npm install encrypted-local-storage
 #### Create new password  
 
 ```js
-import AppStorage from "encrypted-storage"
+import AppStorage from "@randlabs/encrypted-local-storage"
 
 const passwordKey = "masterkey"; // IndexedDB key
 const password = "secret-password";
