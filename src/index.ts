@@ -37,13 +37,13 @@ export default class AppStorage {
 	}
 
 	// Private key storage
-	async savePrivatekeyToStorage(key: string, password: string, pk: Uint8Array): Promise<void> {
+	static async savePrivatekeyToStorage(key: string, password: string, pk: Uint8Array): Promise<void> {
 		const masterkey = await StrongCipher.generateMasterKey(password);
 		const encryptedPk = await StrongCipher.encrypt(toHexString(pk), masterkey);
 		await AppStorage.setItem(key, encryptedPk);
 	}
 
-	async loadPrivatekeyFromStorage(key: string, password: string): Promise<Uint8Array> {
+	static async loadPrivatekeyFromStorage(key: string, password: string): Promise<Uint8Array> {
 		const masterkey = await StrongCipher.generateMasterKey(password);
 		const encryptedPk = await AppStorage.getItem(key);
 		if (!encryptedPk) {
@@ -113,6 +113,10 @@ export default class AppStorage {
 		const hasItem = await Storage.hasItem(key);
 
 		return hasItem;
+	}
+
+	static getKeys(): Promise<string[]> {
+		return Storage.getKeys();
 	}
 
 	static async resetStorage(): Promise<void> {

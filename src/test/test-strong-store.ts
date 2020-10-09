@@ -8,13 +8,7 @@ describe("Strong Store Management", function() {
 	const secretItem = "Item to store";
 
 	before(function(done) {
-		AppStorage.createPassword(masterkey, password)
-		.then(() => {
-			done();
-		})
-		.catch((err) => {
-			done(err);
-		});
+		AppStorage.createPassword(masterkey, password).then(done).catch(done);
 	});
 
 	describe("Save string to the storage", function() {
@@ -23,21 +17,14 @@ describe("Strong Store Management", function() {
 			AppStorage.verifyPassword(masterkey, password)
 			.then((result) => {
 				done();
-			})
-			.catch((err) => {
-				done(err);
-			});
+			}).catch(done);
 		});
 
 		it("Should save the item", function(done) {
-			const storage = new AppStorage();
-			storage.savePrivatekeyToStorage(secretKey, password, new Uint8Array(Buffer.from(secretItem)))
+			AppStorage.savePrivatekeyToStorage(secretKey, password, new Uint8Array(Buffer.from(secretItem)))
 			.then(() => {
 				done();
-			})
-			.catch((err) => {
-				done(err);
-			});
+			}).catch(done);
 		});
 
 	});
@@ -45,9 +32,8 @@ describe("Strong Store Management", function() {
 	describe("Load string from the storage with a invalid password", function() {
 
 		it("Should throw error by load item with a wrong password", function(done) {
-			const storage = new AppStorage();
-			storage.loadPrivatekeyFromStorage(secretKey, "wrong password")
-			.then((storedItem) => {
+			AppStorage.loadPrivatekeyFromStorage(secretKey, "wrong password")
+			.then(() => {
 				done("Invalid test, must fail");
 			})
 			.catch((err) => {
@@ -64,29 +50,20 @@ describe("Strong Store Management", function() {
 			AppStorage.verifyPassword(masterkey, password)
 			.then((result) => {
 				done();
-			})
-			.catch((err) => {
-				done(err);
-			});
+			}).catch(done);
 		});
 
 		it("Should load the item", function(done) {
-			const storage = new AppStorage();
-			storage.loadPrivatekeyFromStorage(secretKey, password)
+			AppStorage.loadPrivatekeyFromStorage(secretKey, password)
 			.then((storedItem) => {
 				const item = (Buffer.from(storedItem)).toString();
 				expect(item).to.be.equal(secretItem);
 				done();
-			})
-			.catch((err) => {
-				done(err);
-			});
+			}).catch(done);
 		});
 
 		after(function(done) {
-			AppStorage.removeItem(secretKey).then(() => {
-				done();
-			});
+			AppStorage.removeItem(secretKey).then(done).catch(done);
 		});
 
 	});
@@ -96,15 +73,11 @@ describe("Strong Store Management", function() {
 			AppStorage.verifyPassword(masterkey, password)
 			.then((result) => {
 				done();
-			})
-			.catch((err) => {
-				done(err);
-			});
+			}).catch(done)
 		});
 
 		it("Should load the item", function(done) {
-			const storage = new AppStorage();
-			storage.loadPrivatekeyFromStorage(secretKey, password)
+			AppStorage.loadPrivatekeyFromStorage(secretKey, password)
 			.then(() => {
 				done("Invalid test, must fail");
 			})
@@ -117,8 +90,6 @@ describe("Strong Store Management", function() {
 	});
 
 	after(function(done) {
-		AppStorage.resetStorage().then(() => {
-			done();
-		});
+		AppStorage.resetStorage().then(done).catch(done);
 	});
 });

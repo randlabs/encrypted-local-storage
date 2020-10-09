@@ -27,4 +27,20 @@ export default class Storage {
 
 		return ret !== null;
 	}
+
+	static getKeys(): Promise<string[]> {
+		return localforage.keys();
+	}
+
+	static setConfig(config: LocalForageOptions): void {
+		localforage.config(config);
+	}
+
+	static getConfig(): LocalForageOptions {
+		return localforage.config();
+	}
+
+	static setDriver(driver: string | string[]): void {
+		localforage.setDriver(driver);
+	}
 }
