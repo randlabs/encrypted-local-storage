@@ -30,8 +30,7 @@ describe("Strong Store Management", function() {
 		});
 
 		it("Should save the item", function(done) {
-			const storage = new AppStorage();
-			storage.savePrivatekeyToStorage(secretKey, password, new Uint8Array(Buffer.from(secretItem)))
+			AppStorage.savePrivatekeyToStorage(secretKey, password, new Uint8Array(Buffer.from(secretItem)))
 			.then(() => {
 				done();
 			})
@@ -45,9 +44,8 @@ describe("Strong Store Management", function() {
 	describe("Load string from the storage with a invalid password", function() {
 
 		it("Should throw error by load item with a wrong password", function(done) {
-			const storage = new AppStorage();
-			storage.loadPrivatekeyFromStorage(secretKey, "wrong password")
-			.then((storedItem) => {
+			AppStorage.loadPrivatekeyFromStorage(secretKey, "wrong password")
+			.then(() => {
 				done("Invalid test, must fail");
 			})
 			.catch((err) => {
@@ -71,8 +69,7 @@ describe("Strong Store Management", function() {
 		});
 
 		it("Should load the item", function(done) {
-			const storage = new AppStorage();
-			storage.loadPrivatekeyFromStorage(secretKey, password)
+			AppStorage.loadPrivatekeyFromStorage(secretKey, password)
 			.then((storedItem) => {
 				const item = (Buffer.from(storedItem)).toString();
 				expect(item).to.be.equal(secretItem);
@@ -103,8 +100,7 @@ describe("Strong Store Management", function() {
 		});
 
 		it("Should load the item", function(done) {
-			const storage = new AppStorage();
-			storage.loadPrivatekeyFromStorage(secretKey, password)
+			AppStorage.loadPrivatekeyFromStorage(secretKey, password)
 			.then(() => {
 				done("Invalid test, must fail");
 			})

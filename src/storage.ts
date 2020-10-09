@@ -27,4 +27,8 @@ export default class Storage {
 
 		return ret !== null;
 	}
+
+	static getKeys(): Promise<string[]> {
+		return localforage.keys();
+	}
 }
