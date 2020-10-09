@@ -47,6 +47,6 @@
     "typescript": "^3.9.3"
   },
   "dependencies": {
-    "localforage": "^1.7.4"
+    "localforage": "^1.9.0"
   }
 }
