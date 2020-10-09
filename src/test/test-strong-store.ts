@@ -8,13 +8,7 @@ describe("Strong Store Management", function() {
 	const secretItem = "Item to store";
 
 	before(function(done) {
-		AppStorage.createPassword(masterkey, password)
-		.then(() => {
-			done();
-		})
-		.catch((err) => {
-			done(err);
-		});
+		AppStorage.createPassword(masterkey, password).then(done).catch(done);
 	});
 
 	describe("Save string to the storage", function() {
@@ -23,20 +17,14 @@ describe("Strong Store Management", function() {
 			AppStorage.verifyPassword(masterkey, password)
 			.then((result) => {
 				done();
-			})
-			.catch((err) => {
-				done(err);
-			});
+			}).catch(done);
 		});
 
 		it("Should save the item", function(done) {
 			AppStorage.savePrivatekeyToStorage(secretKey, password, new Uint8Array(Buffer.from(secretItem)))
 			.then(() => {
 				done();
-			})
-			.catch((err) => {
-				done(err);
-			});
+			}).catch(done);
 		});
 
 	});
@@ -62,10 +50,7 @@ describe("Strong Store Management", function() {
 			AppStorage.verifyPassword(masterkey, password)
 			.then((result) => {
 				done();
-			})
-			.catch((err) => {
-				done(err);
-			});
+			}).catch(done);
 		});
 
 		it("Should load the item", function(done) {
@@ -74,16 +59,11 @@ describe("Strong Store Management", function() {
 				const item = (Buffer.from(storedItem)).toString();
 				expect(item).to.be.equal(secretItem);
 				done();
-			})
-			.catch((err) => {
-				done(err);
-			});
+			}).catch(done);
 		});
 
 		after(function(done) {
-			AppStorage.removeItem(secretKey).then(() => {
-				done();
-			});
+			AppStorage.removeItem(secretKey).then(done).catch(done);
 		});
 
 	});
@@ -93,10 +73,7 @@ describe("Strong Store Management", function() {
 			AppStorage.verifyPassword(masterkey, password)
 			.then((result) => {
 				done();
-			})
-			.catch((err) => {
-				done(err);
-			});
+			}).catch(done)
 		});
 
 		it("Should load the item", function(done) {
@@ -113,8 +90,6 @@ describe("Strong Store Management", function() {
 	});
 
 	after(function(done) {
-		AppStorage.resetStorage().then(() => {
-			done();
-		});
+		AppStorage.resetStorage().then(done).catch(done);
 	});
 });
