@@ -104,9 +104,8 @@ const password = "secret-password";
 const itemKey = "private_key";
 const privateData = "private key information";
 (async () => {
-    const appStorage = new AppStorage(obfuscatekey);
     const data = new Uint8Array(Buffer.from(privateData));
-    await appStorage.savePrivatekeyToStorage(itemKey, password, data);
+    await AppStorage.savePrivatekeyToStorage(itemKey, password, data);
 })().catch(e => {
     console.log(e);
 });
@@ -119,8 +118,7 @@ const password = "secret-password";
 const itemKey = "private_key";
 
 (async () => {
-    const appStorage = new AppStorage(obfuscatekey);
-    const data = await appStorage.loadPrivatekeyFromStorage(itemKey, password, data);
+    const data = await AppStorage.loadPrivatekeyFromStorage(itemKey, password, data);
     console.log(Buffer.from(data).toString());
 })().catch(e => {
     console.log(e);
