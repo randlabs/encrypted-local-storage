@@ -118,7 +118,7 @@ const password = "secret-password";
 const itemKey = "private_key";
 
 (async () => {
-    const data = await AppStorage.loadPrivatekeyFromStorage(itemKey, password, data);
+    const data = await AppStorage.loadPrivatekeyFromStorage(itemKey, password);
     console.log(Buffer.from(data).toString());
 })().catch(e => {
     console.log(e);
